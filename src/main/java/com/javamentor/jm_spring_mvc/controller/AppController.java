@@ -8,12 +8,12 @@ import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/")
-public class MainController {
+public class AppController {
 
-    private static Logger logger = Logger.getLogger(MainController.class.getName());
+    private static Logger logger = Logger.getLogger(AppController.class.getName());
 
     @RequestMapping(method = RequestMethod.GET)
-    public String main() {
+    public String app() {
         logger.info("Main controller passed");
         return "index";
     }

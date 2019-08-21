@@ -1,0 +1,7 @@
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://localhost:3306/example_db
+jdbc.username=example_user
+jdbc.password=example_pass
+hibernate.dialect=org.hibernate.dialect.MySQL57Dialect
+hibernate.show_sql=true
+hibernate.format_sql=true
