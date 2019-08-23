@@ -33,7 +33,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao{
     @Override
     public void deleteUser(Long id) {
         //noinspection JpaQlInspection
-        Query query = getSession().createQuery("delete from User where id = :id", User.class);
+        Query query = getSession().createQuery("delete from User where id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
     }
