@@ -10,11 +10,12 @@
 <c:import url="nav.jsp"/>
 <c:import url="alerts.jsp"/>
 <h3>User:</h3>
-<form action="<c:url value="${empty user ? '/user/create' : '/user/update'}"/>" method="post">
+<%--@elvariable id="user" type="com.javamentor.jm_spring_mvc.model.User"--%>
+<form action="<c:url value="${empty user || empty user.id ? '/user/create' : '/user/update'}"/>" method="post">
 <c:if test="${not empty user && not empty user.id}">
   <p><label>Id: <input type="text" name="id" value="${user.id}" readonly="readonly"></label></p>
 </c:if>
-  <p><label>Login: <input type="text" name="login" value="${empty user ? null : user.login}" ${empty user ? null : 'readonly=\"readonly\"'}/></label></p>
+  <p><label>Login: <input type="text" name="login" value="${empty user ? null : user.login}" ${empty user || empty user.id ? null : 'readonly=\"readonly\"'}/></label></p>
   <p><label>Password: <input type="text" name="password" value="${empty user ? null : user.password}"></label></p>
   <p><label>Name: <input type="text" name="name" value="${empty user ? null : user.name}"></label></p>
   <p><label>Email: <input type="text" name="email" value="${empty user ? null : user.email}"></label></p>
