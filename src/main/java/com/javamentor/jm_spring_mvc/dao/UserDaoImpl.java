@@ -7,31 +7,31 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository("UserDao")
-public class UserDaoImpl extends AbstractDao implements UserDao{
+public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
-    public void saveUser(User user) {
+    public void save(User user) {
         getSession().persist(user);
     }
 
     @Override
-    public User findUser(Long id){
+    public User find(Long id) {
         return getSession().get(User.class, id);
     }
 
     @Override
-    public List<User> findAllUsers() {
+    public List<User> find() {
         //noinspection JpaQlInspection
         return getSession().createQuery("from User", User.class).list();
     }
 
     @Override
-    public void updateUser(User user) {
+    public void update(User user) {
         getSession().update(user);
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public void delete(Long id) {
         //noinspection JpaQlInspection
         Query query = getSession().createQuery("delete from User where id = :id");
         query.setParameter("id", id);

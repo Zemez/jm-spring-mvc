@@ -5,6 +5,7 @@ import com.javamentor.jm_spring_mvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,9 +25,9 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView user(ModelMap model, @RequestParam(required = false) Long id) {
         if (id != null && !model.containsAttribute("user")) {
-            User user = userService.findUser(id);
+            User user = userService.find(id);
             if (user != null) {
-                model.addAttribute("user", user);
+                model.addAttribute(user);
             } else {
                 model.addAttribute("error", "User not found.");
             }
@@ -35,22 +36,20 @@ public class UserController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView create() {
-        return new ModelAndView("user");
+    public ModelAndView create(ModelMap model) {
+        model.addAttribute("user", new User());
+        return new ModelAndView("user", model);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public RedirectView create(RedirectAttributes attributes,
-                               @RequestParam String login, String password, String name, String email) {
-
-        User user = new User(login, password, name, email);
+    public RedirectView create(RedirectAttributes attributes, @ModelAttribute User user) {
         try {
-            userService.saveUser(user);
+            userService.save(user);
             attributes.addFlashAttribute("note", "User successful created.");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
         }
-        attributes.addFlashAttribute("user", user);
+        attributes.addFlashAttribute(user);
         return new RedirectView("/user");
     }
 
@@ -58,10 +57,10 @@ public class UserController {
     public RedirectView read(RedirectAttributes attributes, @RequestParam(required = false) Long id) {
         if (id != null) {
             try {
-                User user = userService.findUser(id);
+                User user = userService.find(id);
                 if (user != null) {
-                    attributes.addFlashAttribute("user", user);
-                    attributes.addAttribute("id", id);
+                    attributes.addFlashAttribute(user);
+                    attributes.addAttribute(id);
                     return new RedirectView("/user");
                 }
                 attributes.addFlashAttribute("error", "User not found.");
@@ -75,33 +74,30 @@ public class UserController {
     @RequestMapping(value = "/all", method = RequestMethod.GET)
     public ModelAndView all(ModelMap model) {
         try {
-            model.addAttribute("users", userService.findAllUsers());
+            model.addAttribute("users", userService.find());
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
         }
         return new ModelAndView("users", model);
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public RedirectView update(RedirectAttributes attributes,
-                               @RequestParam Long id, String login, String password, String name, String email) {
-
-        User user = new User(id, login, password, name, email);
+    @RequestMapping(value = "/update", method = {RequestMethod.POST, RequestMethod.PUT})
+    public RedirectView update(RedirectAttributes attributes, @ModelAttribute User user) {
         try {
-            userService.updateUser(user);
+            userService.update(user);
             attributes.addFlashAttribute("note", "User successful updated.");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
         }
-        attributes.addFlashAttribute("user", user);
-        attributes.addAttribute("id", id);
+        attributes.addFlashAttribute(user);
+        attributes.addAttribute("id", user.getId());
         return new RedirectView("/user");
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete", method = {RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE})
     public RedirectView delete(RedirectAttributes attributes, @RequestParam Long id) {
         try {
-            userService.deleteUser(id);
+            userService.delete(id);
             attributes.addFlashAttribute("note", "User successful deleted.");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());

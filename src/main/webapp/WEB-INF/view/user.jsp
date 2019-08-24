@@ -1,31 +1,48 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>User Page</title>
-  <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>"/>
+    <meta charset="UTF-8">
+    <title>User Page</title>
+    <link rel="stylesheet" type="text/css" href="<c:url value="/css/style.css"/>"/>
 </head>
 <body>
 <c:import url="nav.jsp"/>
 <c:import url="alerts.jsp"/>
 <h3>User:</h3>
 <%--@elvariable id="user" type="com.javamentor.jm_spring_mvc.model.User"--%>
-<form action="<c:url value="${empty user || empty user.id ? '/user/create' : '/user/update'}"/>" method="post">
-<c:if test="${not empty user && not empty user.id}">
-  <p><label>Id: <input type="text" name="id" value="${user.id}" readonly="readonly"></label></p>
-</c:if>
-  <p><label>Login: <input type="text" name="login" value="${empty user ? null : user.login}" ${empty user || empty user.id ? null : 'readonly=\"readonly\"'}/></label></p>
-  <p><label>Password: <input type="text" name="password" value="${empty user ? null : user.password}"></label></p>
-  <p><label>Name: <input type="text" name="name" value="${empty user ? null : user.name}"></label></p>
-  <p><label>Email: <input type="text" name="email" value="${empty user ? null : user.email}"></label></p>
-  <p><button type="submit">${empty user || empty user.id ? 'create' : 'update'}</button></p>
-</form>
-<c:if test="${not empty user && not empty user.id}">
-<form action="<c:url value="/user/delete"/>" method="get">
-  <input type="hidden" name="id" value="${user.id}">
-  <p><button type="submit">delete</button></p>
-</form>
-</c:if>
+<form:form action="${empty user.id ? '/user/create' : '/user/update'}" method="post" commandName="user">
+    <table>
+        <c:if test="${not empty user.id}">
+            <tr>
+                <td><form:label path="id">Id:</form:label></td>
+                <td><form:input path="id" readonly="true"/></td>
+            </tr>
+        </c:if>
+        <tr>
+            <td><form:label path="login">Login:</form:label></td>
+            <td><form:input path="login" readonly="${empty user.id ? false : true}"/></td>
+        </tr>
+        <tr>
+            <td><form:label path="password">Password:</form:label></td>
+            <td><form:input path="password"/></td>
+        </tr>
+        <tr>
+            <td><form:label path="name">Name:</form:label></td>
+            <td><form:input path="name"/></td>
+        </tr>
+        <tr>
+            <td><form:label path="email">Email:</form:label></td>
+            <td><form:input path="email"/></td>
+        </tr>
+    </table>
+    <p>
+        <form:button value="${empty user.id ? 'create' : 'update'}">${empty user.id ? 'create' : 'update'}</form:button>
+        <c:if test="${not empty user.id}">
+            <form:button value="delete" formaction="/user/delete">delete</form:button>
+        </c:if>
+    </p>
+</form:form>
 </body>
 </html>
