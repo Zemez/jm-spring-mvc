@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.NoResultException;
 import java.util.logging.Logger;
 
 @Service("userDetailsService")
@@ -22,7 +23,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        com.javamentor.jm_spring_mvc.model.User user = userDao.find(username);
+        com.javamentor.jm_spring_mvc.model.User user;
+        try {
+            user = userDao.find(username);
+        } catch (NoResultException e) {
+            throw new UsernameNotFoundException("User not found", e);
+        }
 
         if (user == null) throw new UsernameNotFoundException("User not found");
 

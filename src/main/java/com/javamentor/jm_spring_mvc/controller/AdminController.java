@@ -19,13 +19,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
 
-    private static final Logger logger = Logger.getLogger(AdminController.class.getName());
+//    private static final Logger logger = Logger.getLogger(AdminController.class.getName());
 
     @Autowired
     private UserService userService;

@@ -55,10 +55,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public void update(User user) {
-//        Hibernate.initialize(user.getRoles());
-//        for (Role role : user.getRoles()) {
-//            role.setId(roleDao.find(role.getName()).getId());
-//        }
         logger.info(user.toString());
         getSession().update(user);
     }
