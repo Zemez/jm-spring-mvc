@@ -10,7 +10,7 @@ public interface GenericService<T> {
 
     List<T> find();
 
-    void update(T model);
+    void update(T model) throws ReflectiveOperationException;
 
     void delete(Long id);
 
