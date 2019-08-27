@@ -12,7 +12,7 @@ public class Role {
     private Long id;
 
     @Column(name = "name", length = 15, unique = true, nullable = false, updatable = false)
-    private String name = UserRole.USER.getName();
+    private String name; // = UserRole.USER.getName();
 
     public Role() {
     }

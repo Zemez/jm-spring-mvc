@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -29,9 +28,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user) {
-        if (user.getRoles().size() < 1) {
-            user.setRoles(Collections.singletonList(roleDao.find("USER")));
-        }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDao.save(user);
     }

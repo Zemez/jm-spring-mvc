@@ -13,7 +13,12 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth)
             throws IOException, ServletException {
-        request.getSession().setAttribute("message", "You are logged out successfully.");
+        if (request.getAttribute("message") != null) {
+            request.getSession().setAttribute("message", request.getAttribute("message"));
+        }
+        if (request.getSession().getAttribute("message") == null) {
+            request.getSession().setAttribute("message", "You are logged out successfully.");
+        }
         response.sendRedirect("/");
     }
 

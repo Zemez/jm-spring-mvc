@@ -64,7 +64,7 @@ public class AdminController {
     public RedirectView create(RedirectAttributes attributes, @ModelAttribute User user) {
         try {
             userService.save(user);
-            attributes.addFlashAttribute("note", "User successful created.");
+            attributes.addFlashAttribute("message", "User successful created.");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
         }
@@ -105,7 +105,7 @@ public class AdminController {
         identifyRoles(user.getRoles());
         try {
             userService.update(user);
-            attributes.addFlashAttribute("note", "User successful updated.");
+            attributes.addFlashAttribute("message", "User successful updated.");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
         }
@@ -118,7 +118,7 @@ public class AdminController {
     public RedirectView delete(RedirectAttributes attributes, @RequestParam Long id) {
         try {
             userService.delete(id);
-            attributes.addFlashAttribute("note", "User successful deleted.");
+            attributes.addFlashAttribute("message", "User successful deleted.");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
         }

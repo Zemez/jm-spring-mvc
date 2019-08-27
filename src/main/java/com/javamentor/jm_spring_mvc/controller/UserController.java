@@ -56,7 +56,7 @@ public class UserController {
             try {
                 logger.info(user.toString());
                 userService.update(user);
-                attributes.addFlashAttribute("note", "User successful updated.");
+                attributes.addFlashAttribute("message", "User successful updated.");
             } catch (Exception e) {
                 attributes.addFlashAttribute("error", e.getMessage());
             }
@@ -74,14 +74,14 @@ public class UserController {
         if (user != null) {
             try {
                 userService.delete(user.getId());
-                attributes.addFlashAttribute("note", "User successful deleted.");
+                attributes.addFlashAttribute("message", "User successful deleted.");
             } catch (Exception e) {
                 attributes.addFlashAttribute("error", e.getMessage());
             }
         } else {
             attributes.addFlashAttribute("error", "Something going wrong.");
         }
-        return new RedirectView("/");
+        return new RedirectView("/signout");
     }
 
     @ModelAttribute("roles")

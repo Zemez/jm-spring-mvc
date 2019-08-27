@@ -1,9 +1,7 @@
 package com.javamentor.jm_spring_mvc.dao;
 
 import com.javamentor.jm_spring_mvc.model.User;
-import org.hibernate.Hibernate;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,9 +12,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     private static final Logger logger = Logger.getLogger(UserDaoImpl.class.getName());
 
-    @Autowired
-    private RoleDao roleDao;
-
     @Override
     public void save(User user) {
         getSession().persist(user);
@@ -24,11 +19,7 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public User find(Long id) {
-        User user = getSession().get(User.class, id);
-        if (user != null) {
-            Hibernate.initialize(user.getRoles());
-        }
-        return user;
+        return getSession().get(User.class, id);
     }
 
     @Override
@@ -36,21 +27,13 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
         //noinspection JpaQlInspection
         Query<User> query = getSession().createQuery("from User where username = :username", User.class);
         query.setParameter("username", username);
-        User user = query.getSingleResult();
-        if (user != null) {
-            Hibernate.initialize(user.getRoles());
-        }
-        return user;
+        return query.getSingleResult();
     }
 
     @Override
     public List<User> find() {
         //noinspection JpaQlInspection
-        List<User> users = getSession().createQuery("from User", User.class).list();
-        for (User user : users) {
-            Hibernate.initialize(user.getRoles());
-        }
-        return users;
+        return getSession().createQuery("from User", User.class).list();
     }
 
     @Override

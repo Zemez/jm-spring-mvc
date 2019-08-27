@@ -41,11 +41,11 @@ public class AuthController {
         logger.info(user.toString());
         try {
             userService.save(user);
-            attributes.addFlashAttribute("note", "User successful created.");
+            attributes.addFlashAttribute("message", "User successful created.");
         } catch (Exception e) {
             attributes.addFlashAttribute("error", e.getMessage());
         }
-        return new RedirectView("/user");
+        return new RedirectView("/signin");
     }
 
     @ModelAttribute("roles")
