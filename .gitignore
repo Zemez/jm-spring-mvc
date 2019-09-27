@@ -27,6 +27,7 @@ hs_err_pid*
 
 # Idea files
 /.idea/
+*.iml
 
 # Maven builds
 /target/

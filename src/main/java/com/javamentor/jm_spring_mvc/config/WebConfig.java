@@ -19,20 +19,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/signin").setViewName("auth/signin");
+        registry.addViewController("/signin").setViewName("views/auth/signin");
 //        registry.addViewController("/signup").setViewName("user");
     }
 
 }
-
-//@Configuration
-//@EnableWebMvc
-//@ComponentScan(basePackages = "com.javamentor.jm_spring_mvc")
-//public class ServletConfig {
-//
-//    @Bean
-//    public ViewResolver viewResolver() {
-//        return new InternalResourceViewResolver("/WEB-INF/view/", ".jsp");
-//    }
-//
-//}

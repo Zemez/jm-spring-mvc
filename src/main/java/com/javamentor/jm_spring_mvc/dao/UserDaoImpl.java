@@ -24,7 +24,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public User find(String username) {
-        //noinspection JpaQlInspection
         Query<User> query = getSession().createQuery("from User where username = :username", User.class);
         query.setParameter("username", username);
         return query.getSingleResult();
@@ -32,7 +31,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public List<User> find() {
-        //noinspection JpaQlInspection
         return getSession().createQuery("from User", User.class).list();
     }
 
@@ -44,7 +42,6 @@ public class UserDaoImpl extends AbstractDao implements UserDao {
 
     @Override
     public void delete(Long id) {
-        //noinspection JpaQlInspection
         Query query = getSession().createQuery("delete from User where id = :id");
         query.setParameter("id", id);
         query.executeUpdate();

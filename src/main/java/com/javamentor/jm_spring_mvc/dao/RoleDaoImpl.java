@@ -21,7 +21,6 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
 
     @Override
     public Role find(String name) {
-        //noinspection JpaQlInspection
         Query<Role> query = getSession().createQuery("from Role where name = :name", Role.class);
         query.setParameter("name", name);
         return query.getSingleResult();
@@ -29,7 +28,6 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
 
     @Override
     public List<Role> find() {
-        //noinspection JpaQlInspection
         return getSession().createQuery("from Role", Role.class).list();
     }
 
@@ -40,7 +38,6 @@ public class RoleDaoImpl extends AbstractDao implements RoleDao {
 
     @Override
     public void delete(Long id) {
-        //noinspection JpaQlInspection
         Query query = getSession().createQuery("delete from Role where id = :id");
         query.setParameter("id", id);
         query.executeUpdate();
